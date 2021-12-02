@@ -1,6 +1,7 @@
 package se.iths.helena;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,6 +115,22 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public List<Artist> findByAge(int age) {
+        List<Artist> artists = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Artist WHERE age = ?");
+            statement.setInt(1, age);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                artists.add(new Artist(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3),age));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artists;
+    }
+
+    @Override
+    public List<Artist> findByName(String lastName) {
         /*
         try {
 
@@ -122,11 +139,6 @@ public class ArtistDaoImpl implements ArtistDao{
         }
 
          */
-        return null;
-    }
-
-    @Override
-    public List<Artist> findByName(String lastName) {
         return null;
     }
 

@@ -21,6 +21,9 @@ public class ArtistApplication {
         artistDao.showAll();
         artistDao.findById(1).ifPresent(artist -> System.out.println(artist.getId()));
          */
+        artistDao.add(new Artist(4,"Sam","Karlsson",23));
+        artistDao.add(new Artist(5,"Charlie","Stenström",23));
+        artistDao.findByAge(23).forEach(artist -> System.out.println(artist.getId()));
 
 
 
