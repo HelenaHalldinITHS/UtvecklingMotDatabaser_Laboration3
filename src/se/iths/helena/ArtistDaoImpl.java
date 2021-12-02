@@ -74,7 +74,14 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public void update(Artist artist, String lastName) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE Artist SET last_name = ? WHERE id = ?");
+            statement.setString(1, lastName);
+            statement.setInt(2, artist.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
