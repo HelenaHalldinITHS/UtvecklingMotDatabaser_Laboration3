@@ -86,6 +86,14 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public void showAll() {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Artist");
+            print(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -102,5 +110,14 @@ public class ArtistDaoImpl implements ArtistDao{
     @Override
     public List<Artist> findByName(String lastName) {
         return null;
+    }
+
+    private void print(ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
+            System.out.println("id: " + resultSet.getString(1) +
+                    ", first name: " + resultSet.getString(2) +
+                    ", last name: " + resultSet.getString(3) +
+                    ", age: " + resultSet.getString(4));
+        }
     }
 }

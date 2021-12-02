@@ -19,6 +19,7 @@ public class ArtistApplication {
         artistDao.update(new Artist(2,"Tobias","Halldin",24),25);
         artistDao.update(new Artist(2,"Tobias","Halldin",25), "Eklund");
          */
+        artistDao.showAll();
 
 
     }
