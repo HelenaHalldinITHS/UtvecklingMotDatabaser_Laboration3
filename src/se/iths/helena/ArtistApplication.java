@@ -2,6 +2,7 @@ package se.iths.helena;
 
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ArtistApplication {
@@ -33,7 +34,20 @@ public class ArtistApplication {
             case 4 -> updateArtistName(artistDao);
             case 5 -> showAllArtists(artistDao);
             case 6 -> findArtistById(artistDao);
+            case 7 -> findArtistByAge(artistDao);
         }
+    }
+
+    private void findArtistByAge(ArtistDao artistDao) {
+        System.out.println("enter the age of the artist/artists you want to find: ");
+        int age = Integer.parseInt(scanner.nextLine());
+        List <Artist> artists = artistDao.findByAge(age);
+        if (artists.isEmpty())
+            System.out.println("there is no current artist with age: " + age);
+        else {
+            artists.forEach(this::print);
+        }
+        System.out.println();
     }
 
     private void findArtistById(ArtistDao artistDao) {
