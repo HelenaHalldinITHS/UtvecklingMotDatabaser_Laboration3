@@ -29,11 +29,20 @@ public class ArtistApplication {
         switch (i){
             case 1 -> addArtist(artistDao);
             case 2 -> removeArtist(artistDao);
+            case 3 -> updateArtistAge(artistDao);
         }
     }
 
+    private void updateArtistAge(ArtistDao artistDao) {
+        System.out.println("enter id of the artist you want to update: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("enter the artist's new age: ");
+        int age = Integer.parseInt(scanner.nextLine());
+        artistDao.findById(id).ifPresentOrElse(artist -> artistDao.update(artist,age), () -> System.out.println("there is no current artist with id " + id));
+    }
+
     private void removeArtist(ArtistDao artistDao) {
-        System.out.println("enter id of the artist you want to remove");
+        System.out.println("enter id of the artist you want to remove: ");
         int id = Integer.parseInt(scanner.nextLine());
         artistDao.findById(id).ifPresentOrElse(artistDao::delete, () -> System.out.println("there is no current artist with id " + id));
     }
@@ -55,7 +64,8 @@ public class ArtistApplication {
                 Choose one of the following (by writing its corresponding number):
                 1. Add an artist
                 2. Remove an artist
-                3. Update an artist
+                3. Update an artist's age
+                4. Update an artist's lastname
                 4. Show all artists
                 5. Find artist by id
                 6. Find artist by age
