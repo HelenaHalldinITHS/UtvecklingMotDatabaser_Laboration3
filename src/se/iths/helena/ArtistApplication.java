@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class ArtistApplication {
     Scanner scanner = new Scanner(System.in);
 
+
     public static void main(String[] args) {
         ArtistApplication application = new ArtistApplication();
         application.start();
@@ -20,21 +21,33 @@ public class ArtistApplication {
          int choice = getChoice();
          if (choice == 0)
              break;
-         executeChoice(choice);
+         executeChoice(choice,artistDao);
         }
     }
 
-    private void executeChoice(int i){
+    private void executeChoice(int i, ArtistDao artistDao){
         switch (i){
-            case 1 -> addArtist();
+            case 1 -> addArtist(artistDao);
+            case 2 -> removeArtist(artistDao);
         }
     }
 
-    private void addArtist() {
+    private void removeArtist(ArtistDao artistDao) {
+        System.out.println("enter id of the artist you want to remove");
+        int id = Integer.parseInt(scanner.nextLine());
+        artistDao.findById(id).ifPresentOrElse(artistDao::delete, () -> System.out.println("there is no current artist with id " + id));
+    }
+
+    private void addArtist(ArtistDao artistDao) {
         System.out.println("enter the artist's id:");
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("enter the artist's first name: ");
         String firstName = scanner.nextLine();
+        System.out.println("enter the artist's last name: ");
+        String lastName = scanner.nextLine();
+        System.out.println("enter the artist's age:");
+        int age = Integer.parseInt(scanner.nextLine());
+        artistDao.add(new Artist(id,firstName,lastName,age));
     }
 
     private void printMenu() {
