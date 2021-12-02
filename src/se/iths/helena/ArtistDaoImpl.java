@@ -131,15 +131,18 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public List<Artist> findByName(String lastName) {
-        /*
+        List<Artist> artists = new ArrayList<>();
         try {
-
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Artist WHERE last_name = ?");
+            statement.setString(1, lastName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                artists.add(new Artist(resultSet.getInt(1), resultSet.getString(2),lastName,resultSet.getInt(4)));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-         */
-        return null;
+        return artists;
     }
 
     private void print(ResultSet resultSet) throws SQLException {
