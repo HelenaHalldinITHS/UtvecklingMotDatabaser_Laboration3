@@ -50,7 +50,13 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public void delete(Artist artist) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Artist WHERE id = ?");
+            statement.setInt(1, artist.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

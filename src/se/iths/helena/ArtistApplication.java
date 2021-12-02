@@ -15,8 +15,8 @@ public class ArtistApplication {
         artistDao.add(new Artist(1,"Helena","Halldin",23));
         artistDao.add(new Artist(2,"Tobias","Halldin",24));
         artistDao.add(new Artist(3,"Sara","Olsson",23));
+        artistDao.delete(new Artist(3,"Sara","Olsson",23));
          */
-
     }
 
 }
