@@ -20,13 +20,13 @@ public class ArtistApplication {
         while (true) {
             printMenu();
             int choice = getChoice();
-            if (choice == 0)
+            if (!executeChoice(choice, artistDao))
                 break;
-            executeChoice(choice, artistDao);
         }
     }
 
-    private void executeChoice(int i, ArtistDao artistDao) {
+    private boolean executeChoice(int i, ArtistDao artistDao) {
+        boolean continueApplication = true;
         switch (i) {
             case 1 -> addArtist(artistDao);
             case 2 -> removeArtist(artistDao);
@@ -35,7 +35,22 @@ public class ArtistApplication {
             case 5 -> showAllArtists(artistDao);
             case 6 -> findArtistById(artistDao);
             case 7 -> findArtistByAge(artistDao);
+            case 8 -> findArtistByName(artistDao);
+            case 0 -> continueApplication = false;
         }
+        return continueApplication;
+    }
+
+    private void findArtistByName(ArtistDao artistDao) {
+        System.out.println("enter the last name of the artist/artists you want to find: ");
+        String lastName = scanner.nextLine();
+        List <Artist> artists = artistDao.findByName(lastName);
+        if (artists.isEmpty())
+            System.out.println("there is no current artist with the last name: " + lastName);
+        else {
+            artists.forEach(this::print);
+        }
+        System.out.println();
     }
 
     private void findArtistByAge(ArtistDao artistDao) {
@@ -112,11 +127,11 @@ public class ArtistApplication {
                 1. Add an artist
                 2. Remove an artist
                 3. Update an artist's age
-                4. Update an artist's lastname
+                4. Update an artist's last name
                 5. Show all artists
                 6. Find artist by id
                 7. Find artist by age
-                8. Find artist by name
+                8. Find artist by last name
                 0. End application
                 """);
     }
