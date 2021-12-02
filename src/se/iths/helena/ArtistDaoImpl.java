@@ -93,17 +93,35 @@ public class ArtistDaoImpl implements ArtistDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
     public Optional<Artist> findById(int id) {
-        return Optional.empty();
+        Optional<Artist> artist = Optional.empty();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Artist WHERE id = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                artist = Optional.of(new Artist(id,resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4)));
+            }
+            print(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return artist;
     }
 
     @Override
     public List<Artist> findByAge(int age) {
+        /*
+        try {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+         */
         return null;
     }
 

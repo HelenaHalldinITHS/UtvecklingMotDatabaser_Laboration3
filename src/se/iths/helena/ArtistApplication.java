@@ -18,8 +18,10 @@ public class ArtistApplication {
         artistDao.delete(new Artist(3,"Sara","Olsson",23));
         artistDao.update(new Artist(2,"Tobias","Halldin",24),25);
         artistDao.update(new Artist(2,"Tobias","Halldin",25), "Eklund");
-         */
         artistDao.showAll();
+        artistDao.findById(1).ifPresent(artist -> System.out.println(artist.getId()));
+         */
+
 
 
     }
