@@ -11,6 +11,12 @@ public class ArtistApplication {
 
     private void start() {
         ArtistDao artistDao = new ArtistDaoImpl();
+        /*
+        artistDao.add(new Artist(1,"Helena","Halldin",23));
+        artistDao.add(new Artist(2,"Tobias","Halldin",24));
+        artistDao.add(new Artist(3,"Sara","Olsson",23));
+         */
+
     }
 
 }

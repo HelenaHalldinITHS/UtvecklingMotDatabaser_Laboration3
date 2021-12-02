@@ -14,7 +14,6 @@ public class ArtistDaoImpl implements ArtistDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     private void createTable() throws SQLException {
@@ -35,7 +34,18 @@ public class ArtistDaoImpl implements ArtistDao{
 
     @Override
     public void add(Artist artist) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Artist (id, first_name, last_name, age) VALUES (?,?,?,?)");
+            statement.setInt(1, artist.getId());
+            statement.setString(2, artist.getFirstName());
+            statement.setString(3, artist.getLastName());
+            statement.setInt(4, artist.getAge());
+            statement.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e){
+            System.out.println("id " + artist.getId() +" är upptaget");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
