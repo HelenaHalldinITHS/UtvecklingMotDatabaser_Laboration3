@@ -30,7 +30,16 @@ public class ArtistApplication {
             case 1 -> addArtist(artistDao);
             case 2 -> removeArtist(artistDao);
             case 3 -> updateArtistAge(artistDao);
+            case 4 -> updateArtistName(artistDao);
         }
+    }
+
+    private void updateArtistName(ArtistDao artistDao) {
+        System.out.println("enter id of the artist you want to update: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("enter the artist's new last name: ");
+        String lastName = scanner.nextLine();
+        artistDao.findById(id).ifPresentOrElse(artist -> artistDao.update(artist,lastName), () -> System.out.println("there is no current artist with id " + id));
     }
 
     private void updateArtistAge(ArtistDao artistDao) {
