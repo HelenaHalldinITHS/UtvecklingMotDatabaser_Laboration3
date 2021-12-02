@@ -28,8 +28,7 @@ public class ArtistDaoImpl implements ArtistDao {
                             "age smallint," +
                             "primary key(id)" +
                             " );");
-        } catch (SQLSyntaxErrorException e) {
-            System.out.println("Tabellen finns redan");
+        } catch (SQLSyntaxErrorException ignored) {
         }
     }
 
@@ -43,11 +42,12 @@ public class ArtistDaoImpl implements ArtistDao {
             statement.setInt(4, artist.getAge());
             statement.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("id " + artist.getId() + " är upptaget");
+            System.out.println("id " + artist.getId() + " is unavailable");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void delete(Artist artist) {
