@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ArtistDaoImpl implements ArtistDao{
+public class ArtistDaoImpl implements ArtistDao {
     private Connection connection;
 
     public ArtistDaoImpl() {
@@ -42,8 +42,8 @@ public class ArtistDaoImpl implements ArtistDao{
             statement.setString(3, artist.getLastName());
             statement.setInt(4, artist.getAge());
             statement.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException e){
-            System.out.println("id " + artist.getId() +" är upptaget");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("id " + artist.getId() + " är upptaget");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,7 +70,6 @@ public class ArtistDaoImpl implements ArtistDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -103,8 +102,8 @@ public class ArtistDaoImpl implements ArtistDao{
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Artist WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()){
-                artist = Optional.of(new Artist(id,resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4)));
+            if (resultSet.next()) {
+                artist = Optional.of(new Artist(id, resultSet.getString(2), resultSet.getString(3), resultSet.getInt(4)));
             }
             print(resultSet);
         } catch (SQLException e) {
@@ -120,9 +119,7 @@ public class ArtistDaoImpl implements ArtistDao{
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Artist WHERE age = ?");
             statement.setInt(1, age);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                artists.add(new Artist(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3),age));
-            }
+            artists = convertResultSetToList(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -136,11 +133,17 @@ public class ArtistDaoImpl implements ArtistDao{
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Artist WHERE last_name = ?");
             statement.setString(1, lastName);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                artists.add(new Artist(resultSet.getInt(1), resultSet.getString(2),lastName,resultSet.getInt(4)));
-            }
+            artists = convertResultSetToList(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return artists;
+    }
+
+    private List<Artist> convertResultSetToList(ResultSet resultSet) throws SQLException {
+        List<Artist> artists = new ArrayList<>();
+        while (resultSet.next()) {
+            artists.add(new Artist(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getInt(4)));
         }
         return artists;
     }

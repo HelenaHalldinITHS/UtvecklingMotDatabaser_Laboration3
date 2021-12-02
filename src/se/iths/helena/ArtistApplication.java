@@ -2,8 +2,11 @@ package se.iths.helena;
 
 
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class ArtistApplication {
+    Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         ArtistApplication application = new ArtistApplication();
         application.start();
@@ -11,24 +14,43 @@ public class ArtistApplication {
 
     private void start() {
         ArtistDao artistDao = new ArtistDaoImpl();
-        /*
-        artistDao.add(new Artist(1,"Helena","Halldin",23));
-        artistDao.add(new Artist(2,"Tobias","Halldin",24));
-        artistDao.add(new Artist(3,"Sara","Olsson",23));
-        artistDao.add(new Artist(4,"Sam","Karlsson",23));
-        artistDao.add(new Artist(5,"Charlie","Stenström",23));
-        artistDao.delete(new Artist(3,"Sara","Olsson",23));
-        artistDao.update(new Artist(2,"Tobias","Halldin",24),25);
-        artistDao.update(new Artist(2,"Tobias","Halldin",25), "Eklund");
-        artistDao.showAll();
-        artistDao.findById(1).ifPresent(artist -> System.out.println(artist.getId()));
-        artistDao.findByName("Halldin").forEach(artist -> System.out.println(artist.getId()));
-         */
 
-
-
-
-
+        while (true){
+         printMenu();
+         int choice = getChoice();
+         if (choice == 0)
+             break;
+         executeChoice(choice);
+        }
     }
 
+    private void executeChoice(int i){
+        switch (i){
+            case 1 -> addArtist();
+        }
+    }
+
+    private void addArtist() {
+        System.out.println("enter the artist's id:");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.println("enter the artist's first name: ");
+        String firstName = scanner.nextLine();
+    }
+
+    private void printMenu() {
+        System.out.println("""
+                Choose one of the following (by writing its corresponding number):
+                1. Add an artist
+                2. Remove an artist
+                3. Update an artist
+                4. Show all artists
+                5. Find artist by id
+                6. Find artist by age
+                7. Find artist by name
+                0. End application
+                """);
+    }
+    private int getChoice(){
+        return Integer.parseInt(scanner.nextLine());
+    }
 }
